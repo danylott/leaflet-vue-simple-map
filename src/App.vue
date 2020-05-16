@@ -1,11 +1,13 @@
 <template>
   <div id="app" class="container">
-    <LeafletMap />
+    <!-- <LeafletMap /> -->
+    <MarkerMap />
   </div>
 </template>
 
 <script>
-import LeafletMap from './components/LeafletMap.vue';
+// import LeafletMap from './components/LeafletMap.vue';
+import MarkerMap from './components/MarkerMap.vue';
 export default {
   name: 'App',
   data() {
@@ -16,7 +18,8 @@ export default {
   methods: {
   },
   components: {
-    LeafletMap,
+    // LeafletMap, 
+    MarkerMap,
   }
 }
 </script>

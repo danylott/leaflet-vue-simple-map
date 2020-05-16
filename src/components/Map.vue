@@ -28,6 +28,9 @@
         v-for="(point, index) in points" 
         :lat-lng="latLngMethod(point.latitude, point.longitude)"
         >
+        <l-icon class="leaflet-div-icon" >
+
+        </l-icon>
         <l-popup>
           <div @click="innerClick">
             {{ point.name }}
@@ -43,7 +46,7 @@
 
 <script>
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
+import { LMap, LIcon, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
 
 export default {
   name: "Example",
@@ -52,6 +55,7 @@ export default {
     LTileLayer,
     LMarker,
     LPopup,
+    LIcon,
   },
   data() {
     return {
@@ -91,3 +95,10 @@ export default {
   }
 };
 </script>
+
+<style lang="scss" scoped>
+.leaflet-div-icon {
+    background: #fff;
+    border: 1px solid #666;
+}
+</style>
