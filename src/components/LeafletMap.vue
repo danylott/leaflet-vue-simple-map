@@ -13,7 +13,7 @@
                 <PointList :points="points" />
             </div>
             <div class="col-6">
-                <Map/>
+                <Map :points="points"/>
             </div>
         </div>
     </div>

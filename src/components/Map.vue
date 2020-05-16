@@ -1,8 +1,7 @@
 <template>
 
-  <div style="height: 500px; width: 100%">
+  <div style="height: 95vh; width: 100%">
     <div style="height: 200px overflow: auto;">
-      <p>First marker is placed at {{ withPopup.lat }}, {{ withPopup.lng }}</p>
       <p>Center is at {{ currentCenter }} and the zoom is: {{ currentZoom }}</p>
       <button @click="showLongText">
         Toggle long popup
@@ -24,29 +23,19 @@
         :url="url"
         :attribution="attribution"
       />
-      <l-marker :lat-lng="withPopup">
+      <l-marker 
+        :key="index" 
+        v-for="(point, index) in points" 
+        :lat-lng="latLngMethod(point.latitude, point.longitude)"
+        >
         <l-popup>
           <div @click="innerClick">
-            I am a popup
+            {{ point.name }}
             <p v-show="showParagraph">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-              Donec finibus semper metus id malesuada.
+              city: {{ point.city }}, country: {{ point.country }}, website_url {{ point.website_url }}
             </p>
           </div>
         </l-popup>
-      </l-marker>
-      <l-marker :lat-lng="withTooltip">
-        <l-tooltip :options="{ permanent: true, interactive: true }">
-          <div @click="innerClick">
-            I am a tooltip
-            <p v-show="showParagraph">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque
-              sed pretium nisl, ut sagittis sapien. Sed vel sollicitudin nisi.
-              Donec finibus semper metus id malesuada.
-            </p>
-          </div>
-        </l-tooltip>
       </l-marker>
     </l-map>
   </div>
@@ -54,7 +43,7 @@
 
 <script>
 import { latLng } from "leaflet";
-import { LMap, LTileLayer, LMarker, LPopup, LTooltip } from "vue2-leaflet";
+import { LMap, LTileLayer, LMarker, LPopup } from "vue2-leaflet";
 
 export default {
   name: "Example",
@@ -63,7 +52,6 @@ export default {
     LTileLayer,
     LMarker,
     LPopup,
-    LTooltip
   },
   data() {
     return {
@@ -72,10 +60,8 @@ export default {
       url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
       attribution:
         '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      withPopup: latLng(47.41322, -1.219482),
-      withTooltip: latLng(47.41422, -1.250482),
       currentZoom: 11.5,
-      currentCenter: latLng(47.41322, -1.219482),
+      currentCenter: latLng(33.524521, -86.774322),
       showParagraph: false,
       mapOptions: {
         zoomSnap: 0.5
@@ -83,7 +69,13 @@ export default {
       showMap: true
     };
   },
+  props: {
+      points: Array,
+  },
   methods: {
+    latLngMethod(latitude, longitude) {
+        return latLng(latitude, longitude);
+    },
     zoomUpdate(zoom) {
       this.currentZoom = zoom;
     },
